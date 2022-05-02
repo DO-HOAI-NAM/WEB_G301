@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="function__mgt-add">
+<a class="btn btn-primary" href="{{path('class_add')}}">ADD</a>
+<div>
+<table class="table table-bordered">
+<tr> 
+<th>ID</th>
+<th>Name</th>
+</tr>
+{% for c in classes %}
+<tr>
+<td>{{c.id}}</td>
+<td><a href="{{path('classDetail',{'id':c.id})}}">{{c.ClassID}}</a</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}

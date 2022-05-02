@@ -1,0 +1,21 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<table class="table table-bordered">
+<tr>
+<th>ID</th>
+<th>Teacher</th>
+<th>Student</th>
+</tr>
+<tr>
+<td>{{class.ClassID}}</td>
+{% for t in class.teachers %}
+<td>{{t.name}}</td>
+{% endfor %}
+{% for s in class.student %}
+<td>{{s.name}}</td>
+{% endfor %}
+</tr>
+</table>
+{% endblock %}

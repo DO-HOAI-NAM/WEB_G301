@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StudentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StudentRepository::class)]
@@ -30,6 +32,14 @@ class Student
 
     #[ORM\ManyToOne(targetEntity: Course::class, inversedBy: 'students')]
     private $course;
+
+    #[ORM\ManyToMany(targetEntity: ClassRoom::class, mappedBy: 'student')]
+    private $classRooms;
+
+    public function __construct()
+    {
+        $this->classRooms = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +114,33 @@ class Student
     public function setCourse(?Course $course): self
     {
         $this->course = $course;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ClassRoom>
+     */
+    public function getClassRooms(): Collection
+    {
+        return $this->classRooms;
+    }
+
+    public function addClassRoom(ClassRoom $classRoom): self
+    {
+        if (!$this->classRooms->contains($classRoom)) {
+            $this->classRooms[] = $classRoom;
+            $classRoom->addStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClassRoom(ClassRoom $classRoom): self
+    {
+        if ($this->classRooms->removeElement($classRoom)) {
+            $classRoom->removeStudent($this);
+        }
 
         return $this;
     }
