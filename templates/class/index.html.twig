@@ -8,11 +8,14 @@
 <tr> 
 <th>ID</th>
 <th>Name</th>
+<th>Menu</th>
 </tr>
 {% for c in classes %}
 <tr>
 <td>{{c.id}}</td>
 <td><a href="{{path('classDetail',{'id':c.id})}}">{{c.ClassID}}</a</td>
+<td><a class="btn btn-warning" href="{{path('classEdit',{'id':c.id})}}">Edit</a>
+<a class="btn btn-danger" href="{{path('class_delete',{'id':c.id})}}">Delete</a></td>
 </tr>
 {% endfor %}
 </table>

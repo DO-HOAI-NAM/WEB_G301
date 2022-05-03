@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Teacher;
+use App\Entity\ClassRoom;
+use App\Form\TeacherType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,15 +17,18 @@ class TeacherController extends AbstractController
 {
     #[Route('/', name: 'teacher_index')]
     public function teacherIndex (ManagerRegistry $registry) {
+        $classes = $registry->getRepository(ClassRoom::class)->findAll();
         $teachers = $registry->getRepository(Teacher::class)->findAll();
         return $this->render("teacher/index.html.twig",
         [
             'teachers' => $teachers,
+            'classes' => $classes
         ]);
     }
  
     #[Route('/detail/{id}', name: 'teacher_detail')]
     public function teacherDetail (ManagerRegistry $registry, $id) {
+        $classes = $registry->getRepository(ClassRoom::class)->findAll();
         $teacher = $registry->getRepository(Teacher::class)->find($id);
         if ($teacher == null) {
             $this->addFlash("Error","Teacher not found !");
@@ -32,11 +37,13 @@ class TeacherController extends AbstractController
         return $this->render("teacher/detail.html.twig",
         [
             'teacher' => $teacher,
+            'classes' => $classes
         ]);
     }
 
     #[Route('/delete/{id}', name: 'teacher_delete')]
     public function teacherDelete (ManagerRegistry $registry, $id) {
+        $classes = $registry->getRepository(ClassRoom::class)->findAll();
         $teacher = $registry->getRepository(Teacher::class)->find($id);
         if ($teacher == null) {
             $this->addFlash("Error","Teacher not found !");
@@ -46,12 +53,15 @@ class TeacherController extends AbstractController
             $manager->flush();
             $this->addFlash("Success", "Teacher delete succeed !");
         }
-        return $this->redirectToRoute("teacher_index");
+        return $this->redirectToRoute("teacher_index",[
+            'classes' => $classes,
+        ]);
     }
 
     #[Route('/add', name: 'teacher_add')]
    public function teacherAdd(Request $request, ManagerRegistry $registry) {
        $teacher = new Teacher;
+       $classes = $registry->getRepository(ClassRoom::class)->findAll();
        $form = $this->createForm(TeacherType::class,$teacher);
        $form->handleRequest($request);
        if ($form->isSubmitted() && $form->isValid()) {
@@ -74,19 +84,21 @@ class TeacherController extends AbstractController
        }
        return $this->renderForm('teacher/add.html.twig',
                                 [
-                                  'teacherForm' => $form,
+                                    'classes' => $classes,
+                                  'teacherForm' => $form
                                 ]);
    }
 
    #[Route('/edit/{id}', name: 'teacher_edit')]
    public function teacherEdit(Request $request, ManagerRegistry $registry, $id) {
+    $classes = $registry->getRepository(ClassRoom::class)->findAll();
        $teacher = $registry->getRepository(Teacher::class)->find($id);
        $form = $this->createForm(TeacherType::class, $teacher);
        $form->handleRequest($request);
        if ($form->isSubmitted() && $form->isValid()) {
-           $imageFile = $form['image']->getData();
+           $imageFile = $form['avatar']->getData();
            if ($imageFile != null) {
-               $image = $teacher->getImage();
+               $image = $teacher->getAvatar();
                $imgName = uniqid();
                $imgExtension = $image->guessExtension();
                $imageName = $imgName . '.' . $imgExtension;
@@ -97,7 +109,7 @@ class TeacherController extends AbstractController
                    );
                } catch (FileException $e) {
                }
-               $teacher->setImage($imageName);
+               $teacher->setAvatar($imageName);
            }
 
            $manager = $registry->getManager();
@@ -108,9 +120,21 @@ class TeacherController extends AbstractController
        }
        return $this->renderForm('teacher/edit.html.twig',
                                 [
-                                    'teacherForm' => $form,
+                                    'classes' => $classes,
+                                    'teacherForm' => $form
                                 ]);
    }
+//    #[Route('/filter/{id}', name: 'teacher_filter')]
+//    public function filter ($id, ManagerRegistry $registry) {
+//        $classes = $registry->getRepository(ClassRoom::class)->findAll();
+//        $class = $registry->getRepository(ClassRoom::class)->find($id);
+//        $teachers = $class->getTeachers();
+//        return $this->render("teacher/index.html.twig",
+//                             [
+//                                 'classes' => $classes,
+//                                 'teachers' => $teachers
+//                             ]);
+//    }
 }
 
 

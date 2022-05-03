@@ -11,7 +11,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class TeacherType extends AbstractType
 {
@@ -31,7 +33,7 @@ class TeacherType extends AbstractType
             ->add('avatar', FileType::class, [
                 'required' => false,
                 'data_class' => null,
-                'required' => is_null($builder->getdata()->getImage()) 
+                'required' => is_null($builder->getdata()->getAvatar()) 
             ])
             ->add('classroom', EntityType::class, [
                 'class' => ClassRoom::class,
@@ -41,10 +43,11 @@ class TeacherType extends AbstractType
             ])
             ->add('course', EntityType::class,[
                 'class' => Course::class,
-                'choice_label' => "ClassID",
+                'choice_label' => "name",
                 'multiple' => true,
                 'expanded' => false
             ])
+            ->add('save', SubmitType::class)
         ;
     }
 

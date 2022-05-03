@@ -1,0 +1,28 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<table class="table table-bordered">
+<tr>
+<th>Name</th>
+<th>Avatar</th>
+<th>Birthday</th>
+<th>Salary</th>
+<th>Classroom</th>
+<th>Course</th>
+</tr>
+<tr>
+<td>{{teacher.name}}</td>
+<td><img src="{{asset('images/teachers/'~teacher.avatar)}}" width="100" height="100"></td>
+<td>{{ teacher.birthday | date('d-m-Y') }}</td>>
+<td>{{teacher.salary}}</td>
+{% for c in teacher.classroom %}
+<td>{{c.ClassID}}
+<br></td>
+{% endfor %}
+{% for c in teacher.course %}
+<td>{{c.name}}</td>
+{% endfor %}
+</tr>
+</table>
+{% endblock %}

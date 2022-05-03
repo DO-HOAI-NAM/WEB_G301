@@ -18,13 +18,6 @@ class ClassType extends AbstractType
     {
         $builder
             ->add('ClassID', TextType::class)
-            ->add('teachers', EntityType::class, [
-                'class' => Teacher::class, 
-                'required' => false,
-                'choice_label' => "name",
-                'multiple' => true,
-                'expanded' => false
-            ])
             ->add('student', EntityType::class, [
                 'class' => Student::class, 
                 'required' => false,
