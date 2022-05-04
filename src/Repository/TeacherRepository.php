@@ -47,22 +47,22 @@ class TeacherRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return Teacher[] Returns an array of Teacher objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return Teacher[] Returns an array of Teacher objects
+    */
+    
+    public function searchTeacher($keyword)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
+            ->andWhere('t.name LIKE :key')
+            ->setParameter('key', '%' . $keyword . '%')
+            ->orderBy('t.name', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Teacher

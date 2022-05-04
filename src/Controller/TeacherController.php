@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Teacher;
 use App\Entity\ClassRoom;
 use App\Form\TeacherType;
+use App\Repository\TeacherRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +40,15 @@ class TeacherController extends AbstractController
             'teacher' => $teacher,
             'classes' => $classes
         ]);
+    }
+    #[Route('/search', name: 'teacher_search')]
+    public function search(Request $request ,TeacherRepository $teacherRepository){
+        $keyword = $request->get('name');
+        $teachers = $teacherRepository->searchTeacher($keyword);
+        return $this->render('teacher/index.html.twig', 
+                            [
+                                'teachers' => $teachers,
+                            ]);
     }
 
     #[Route('/delete/{id}', name: 'teacher_delete')]
@@ -149,15 +159,7 @@ class TeacherController extends AbstractController
 //        'semesters' => $semesters 
 //     ]);
 //     }
-    // #[Route('/search', name: 'semester_search')]
-    // public function search(Request $request ,SemesterRepository $semesterRepository){
-    //     $keyword = $request->get('name');
-    //     $semesters = $semesterRepository->search($keyword);
-    //     return $this->render('semester/index.html.twig', 
-    //                         [
-    //                             'semesters' => $semesters,
-    //                         ]);
-    // }
+ 
 }
 
 
