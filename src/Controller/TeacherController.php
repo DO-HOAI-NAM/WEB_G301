@@ -135,6 +135,29 @@ class TeacherController extends AbstractController
 //                                 'teachers' => $teachers
 //                             ]);
 //    }
+//     #[Route('/asc', name:'semester_asc')]
+//     public function sortAsc(ManagerRegistry $registry, SemesterRepository $semesterRepository){
+//     $semesters = $semesterRepository->sortSemesterAsc();
+//     return $this->render("semester/index.html.twig",[
+//        'semesters' => $semesters 
+//     ]);
+// }
+//      #[Route('/desc', name:'semester_desc')]
+//     public function sortDesc(ManagerRegistry $registry, SemesterRepository $semesterRepository){
+//     $semesters = $semesterRepository->sortSemesterDesc();
+//     return $this->render("semester/index.html.twig",[
+//        'semesters' => $semesters 
+//     ]);
+//     }
+    // #[Route('/search', name: 'semester_search')]
+    // public function search(Request $request ,SemesterRepository $semesterRepository){
+    //     $keyword = $request->get('name');
+    //     $semesters = $semesterRepository->search($keyword);
+    //     return $this->render('semester/index.html.twig', 
+    //                         [
+    //                             'semesters' => $semesters,
+    //                         ]);
+    // }
 }
 
 
