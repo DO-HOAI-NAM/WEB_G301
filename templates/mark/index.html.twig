@@ -1,0 +1,75 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container-fluid col-md-10 text-center">
+		<h2 class="text text-success">Mark Report</h2>
+		<a class="btn btn-primary mt-5" href="{{path('mark_add')}}">ADD</a>
+		<table class="table table-bordered">
+			<tr>
+				<th>ID</th>
+				<th>Student Name</th>
+				{# <th>Subject Name</th> #}
+				<th>Semester</th>
+				<th>Mark assignment 1</th>
+				<th>Mark assignment 2</th>
+				<th>Mark Average</th>
+				<th>Menu</th>
+				<th>Status</th>
+			</tr>
+			<script language="JavaScript">
+				var num = 1
+			</script>
+			{% for mark in marks %}
+				<tr>
+					<td>
+						<script language="JavaScript">
+							document.write(num++);
+						</script>
+					</td>
+					<td>
+						{% if mark.student != null %}
+							<a style="text-decoration: none" class="text text_success" href="{{path('student_detail', {'id': mark.student.id})}}">
+								{{mark.student.name}}
+							</a>
+						{% endif %}
+					</td>
+					{# <td>
+																{% if mark.subject != null %}
+																	<a style="text-decoration: none" class="text text_success" href="{{path('subject_detail', {'id': mark.subject.id})}}">
+																		{{mark.subject.name}}
+																	</a>
+																{% endif %}
+															</td> #}
+					<td>
+						{% if mark.semester != null %}
+							<a style="text-decoration: none" class="text text_success" href="{{path('semester_detail', {'id': mark.semester.id})}}">
+								{{mark.semester.name}}
+							</a>
+						{% endif %}
+					</td>
+					<td>
+						{{mark.assignment1}}</td>
+					<td>{{mark.assignment2}}</td>
+					<td>{{(mark.assignment1 + mark.assignment2)/2}}</td>
+					<td>
+						<a class="btn btn-success" href="{{path('mark_edit', {'id': mark.id})}}">Edit</a>
+						<a class="btn btn-info" href="{{path('mark_delete',{'id':mark.id})}}" onclick="return confirm('Are you sure?')">Delete</a>
+					</td>
+					<td> 
+						{% if ((mark.assignment1 + mark.assignment2)/2) >= 5 and ((mark.assignment1 + mark.assignment2)/2) <8  %}
+							Passed
+						{% elseif ((mark.assignment1 + mark.assignment2)/2) >= 8 and ((mark.assignment1 + mark.assignment2)/2) < 10 %}
+							Merit
+						{% elseif ((mark.assignment1 + mark.assignment2)/2) == 10 %}
+							Distinsion
+						{% else %}
+							Failed
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+
+	</div>
+{% endblock %}

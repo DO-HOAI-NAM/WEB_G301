@@ -1,0 +1,12 @@
+{% form_theme semesterForm 'bootstrap_5_layout.html.twig' %}
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container col-md-7">
+		<h2>Add new Semester</h2>
+</div>
+		<div class="container col-md-2 text-center">
+		{{ form_start(semesterForm) }}
+		{{ form_end(semesterForm) }}
+		</div>
+{% endblock %}

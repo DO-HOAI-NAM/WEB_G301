@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+{% block body %}
+	<div class="container-fluid col-md-5 text-center">
+		<table class="table table-bordered border-primary">
+			<h2 class="text text-primary">{{semester.name}}</h2>
+			<tr>
+				<th>Student Name</th>
+				<th>Subject</th>
+				<th>Assignment 1</th>
+				<th>Assignment 2</th>
+				<th>Average</th>
+				<th>Rank</th>
+
+			</tr>
+			{% if semester.marks != null %}
+				{% for mark in semester.marks %}
+					<tr>
+						<td>{{mark.student.name}}</td>
+						<td>{{mark.subject.name}}</td>
+						<td>{{mark.assignment1}}</td>
+						<td>{{mark.assignment2}}</td>
+						<td>{{(mark.assignment1 + mark.assignment2)/2}}</td>
+						<th>
+
+							{% if (mark.assignment1 + mark.assignment2)/2 >= 5 %}
+								High Grade
+							{% else %}
+								Lowest
+							{% endif %}
+
+
+						</th>
+
+						<br>
+					{% endfor %}
+				{% endif %}
+			</tr>
+		</table>
+	</div>
+</div>{% endblock %}
