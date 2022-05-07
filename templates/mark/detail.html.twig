@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container col-md-8 text-center">
+		<h3 class="text-primary mt-8">Mark Detail</h3>
+		<divc
+			class="row">
+			{# <div class = "col">
+						            <img src="{{mark}}}" width = 200 height = 200>
+						        </div> #}
+			<div class="col">
+				<h5 calss="text-success">Student Name:
+					{% if mark.student!= null %}
+						<a href="{{path('student_detail', {'id': mark.student.id})}}">{{mark.student.name}}</a>
+					{% endif %}
+				</h5>
+				<h5 calss="text-success">Subject:
+					{% if mark.subject != null %}
+						<a href="{{path('subject_detail', {'id': mark.subject.id})}}">{{mark.subject.name}}</a>
+					{% endif %}
+				</h5>
+				<h5 calss="text-success">Semester:
+					{% if mark.semester != null %}
+						<a href="{{path('semester_detail', {'id': mark.semester.id})}}">{{mark.semester.name}}</a>
+					{% endif %}
+				</h5>
+				<h3 class="text-info">Assignment 1:
+					{{mark.assignment1}}</h3>
+				<h3 class="text-info">Assignment 2:
+					{{mark.assignment2}}</h3>
+
+				{# <h5 class="text-secondary">Price: {{mark.assignment2}} $</h5> #}
+				{# <h5 class="text-monospace">Published Date: {{book.date | date('d-m-Y')}}</h5> #}
+			</div>
+		</div>
+	</div>
+{% endblock %}

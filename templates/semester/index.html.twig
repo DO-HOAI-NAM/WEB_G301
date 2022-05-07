@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<div class="container-fluid col-md-10 text-center">
+		<h2 class="text text-success">Semester</h2>
+		{# <form action="{{path('semester_search')}}" method="post">
+							<input type="search" name="name" id="">
+							<input type="submit" value="Search">
+						</form> #}
+		<a class="btn btn-primary mt-5" href="{{path('semester_add')}}">ADD</a>
+		<table class="table table-bordered">
+			<tr>
+				<th>ID
+					{#<select onchange="window.location.href=this.value">
+						<option>Sort</option>
+						<option value="{{path('semester_asc')}}">ASC</option>
+						<option value="{{path('semester_desc')}}">DESC</option>
+					</select>#}
+				</th>
+				<th>Semester Name</th>
+				<th>Date Start</th>
+				<th>Date End</th>
+				{# <th>Total dates</th> #}
+				<th>Menu</th>
+			</tr>
+			<script language="JavaScript">
+				var num = 1
+			</script>
+			{% for semester in semesters %}
+				<tr>
+					<td>
+						<script language="JavaScript">
+							document.write(num++);
+						</script>
+					</td>
+					<td>
+						<a style="text-decoration: none" href="{{path('semester_detail',{'id':semester.id})}}">
+							{{semester.name}}
+						</a>
+					</td>
+					<td>{{semester.dateStart | date('d/m/Y')}}
+
+
+					</td>
+					<td>{{semester.dateEnd | date('d/m/Y')}}
+					</td>
+					{# {% set total = date(semester.dateEnd).diff(date(semester.dateStart)).days %}
+										<td>{{total}}</td> #}
+					<td>
+						<a class="btn  btn-success" href="{{path('semester_edit', {'id': semester.id})}}">Edit</a>
+						<a class="btn btn-info" href="{{path('semester_delete',{'id':semester.id})}}" onclick="return confirm('Are you sure?')">Delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

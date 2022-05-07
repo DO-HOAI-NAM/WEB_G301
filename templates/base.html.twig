@@ -19,45 +19,73 @@
 				class="navbar navbar-light" style="background-color: #e3f2fd;">
 				<!-- Navbar content -->
 				<ul class="nav justify-content-center|justify-content-end">
-					<nav class="navbar navbar-expand-lg ">
-						<div class="container-fluid">
-							<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-								<div class="navbar-nav">
+					<h1>
+						<li class="nav-tabs">
+							<a class="nav-link" href="{{ path('home_index')}}">Home</a>
+						</li>
+					</h1>
+					<h1>
+						<li class="nav-tabs">
+							<a class="nav-link" href="{{ path('student_index')}}">Student</a>
+						</li>
+					</h1>
+
+					<h1>
+						<li class="nav-tabs">
+							<a class="nav-link" href="{{ path('course_index')}}">Course</a>
+						</li>
+					</h1>
+
+					<h1>
+						<li class="nav-tabs">
+							<a class="nav-link" href="{{ path('classIndex')}}">Class</a>
+						</li>
+					</h1>
+					<h1>
+						<li class="nav-tabs">
+							<a class="nav-link" href="{{ path('teacher_index')}}">Teacher</a>
+						</li>
+					</h1>
+					<h1>
+						<li class="nav-tabs">
+							<a class="nav-link" href="{{ path('mark_index')}}">Mark</a>
+
+						</li>
+					</h1>
+					<h1>
+						<li class="nav-tabs">
+							<a class="nav-link" href="{{ path('semester_index')}}">Semester</a>
+
+						</li>
+					</h1>
 
 
-									<a class="nav-link" href="{{ path('home_index')}}">Home</a>
-
-
-									<a class="nav-link" href="{{ path('student_index')}}">Student</a>
-
-
-									<a class="nav-link" href="{{ path('course_index')}}">Course</a>
-									<a class="nav-link" href="{{ path('classIndex')}}">Class</a>
-									<a class="nav-link" href="{{ path('teacher_index')}}">Teacher</a>
-
-									<a class="nav-link" href="{{ path('app_logout')}}">Logout
-										<i>
-											({{ app.user.username }})
-										</i>
-									</a>
-								</li>
-
-
-							</div>
-						</div>
-					</div>
-				</nav>
-
-
-			</nav>
+					{% if app.user.username != null %}
+						<h1>
+							<li class="nav-tabs">
+								<a class="nav-link" href="{{ path('app_logout')}}">Logout
+									<i>
+										({{ app.user.username }})
+									</i>
+								</a>
+							</li>
+						</h1>
+					{% endif %}
+				</ul>
+			{% endblock %}
+			{# show flash message #}
+			{% block flash %}
+				<div class="container-md col-md-5 mt-3 text-center">
+					{% for message in app.session.flashBag.get('Success') %}
+						<p class="alert alert-success">{{ message }}</p>
+					{% endfor %}
+					{% for message in app.session.flashBag.get('Error') %}
+						<p class="alert alert-danger">{{ message }}</p>
+					{% endfor %}
+				</div>
+			{% endblock %}
+			{% block body %}{% endblock %}
 		</body>
-	</html>
-</ul>{% endblock %}{# show flash message #}{% block flash %}
-<div class="container-md col-md-5 mt-3 text-center">
-	{% for message in app.session.flashBag.get('Success') %}
-		<p class="alert alert-success">{{ message }}</p>
-	{% endfor %}
-	{% for message in app.session.flashBag.get('Error') %}
-		<p class="alert alert-danger">{{ message }}</p>
-	{% endfor %}
-</div>{% endblock %}{% block body %}{% endblock %}</body></html>
+	</body>
+</html>
+
