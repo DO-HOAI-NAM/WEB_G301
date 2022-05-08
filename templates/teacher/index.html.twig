@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="function__mgt-add">
+<div class="container-fluid col-md-10 text-center">
 					<h5 class="text-uppercase text-center mt-3">
 					{% set total = teachers|length %}
     				{% if total <= 1 %}
@@ -14,7 +14,8 @@
 <form action="{{ path('teacher_search')}}" method="post">
 	<input class="m-lg-1" type="search" name="name" id=""><button class="btn btn-warning p-1 m-lg-2" type="submit">Search</button>
 </form>
-<div>
+</div>
+<div class="container-fluid col-md-10 text-center">
 <table class="table table-bordered">
 <tr> 
 <th>ID</th>
